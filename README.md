@@ -30,7 +30,7 @@ The model is developed using:
 - Healthy  
 - Stem End Rot
   
-## 🎯 Why MobileNetV2?
+##  Why MobileNetV2?
 
 - Lightweight & fast  
 - High accuracy with small dataset  
@@ -59,11 +59,6 @@ The model is developed using:
 3. Model processes the image  
 4. Prediction generated  
 5. Result displayed on UI  
-
-##  Sample Output
-
-- **Predicted Disease:** Anthracnose  
-- **Confidence:** 99.78%  
 
 ##  Tech Stack
 
