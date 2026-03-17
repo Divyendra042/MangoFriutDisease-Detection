@@ -1,39 +1,112 @@
+# 🥭 Mango Fruit Disease Detection Web Application
 
-# Mango Fruit Disease Detection Using Machine Learning
+---
 
-## Project Description
-This project involves the development of a mobile application designed to help farmers and orchard owners quickly identify diseases in mango fruits. The application utilizes machine learning algorithms to analyze images of mango fruits and provide accurate diagnoses of various diseases.
+## 📌 Overview
 
-The scope of the project includes the creation of a user-friendly mobile app for Android platforms, which allows users to capture images of mango fruits. The app then processes these images through a backend machine learning model to detect and classify the presence of diseases.
+This project presents a **web-based intelligent system** for detecting mango fruit diseases using **Deep Learning (MobileNetV2)**.
 
-The project aims to address the challenges faced in the mango industry due to diseases that affect crop quality and yield. By providing timely and accurate disease detection, the application helps in the effective management of mango crops, ensuring sustainable production.
+The system allows users to upload mango images and receive:
+- ✅ Instant disease prediction
+- 📊 Confidence score
+- 🧾 Disease details (symptoms, precautions, diagnosis)
 
-## Technologies Used
-- **Programming Language:** Python
-- **Machine Learning Frameworks:** TensorFlow, PyTorch
-- **Image Processing Libraries:** OpenCV
-- **Mobile Development:** Android Development tools (e.g., Android Studio)
-- **Deep Learning Models:** Convolutional Neural Networks (CNN)
-- **Transfer Learning:** Utilized for enhancing model efficiency and accuracy
-- **Hardware Requirements:**
-  - **CPU/GPU:** Multi-core CPU or NVIDIA CUDA-enabled GPUs for model training and inference
-  - **RAM:** Minimum 4GB for handling large datasets
-  - **Storage:** SSDs preferred for faster data access
+The application integrates:
+- 🌐 React Frontend (Modern UI)
+- 🔙 Flask Backend API
+- 🧠 Deep Learning Model (CNN + Transfer Learning)
 
-## Functional Features
-- **Image Upload & Processing:** Users can upload mango fruit images, which are then processed for quality enhancement and standardized input.
-- **Real-time Disease Detection:** The system provides real-time analysis of uploaded images, identifying and classifying mango diseases promptly.
-- **Multi-class Classification:** Supports classification of various mango diseases, providing specific diagnoses.
+---
 
-## Non-Functional Requirements
-- **Performance:** Ensures real-time processing with rapid analysis and response times.
-- **Reliability:** High reliability with robust error handling and minimal downtime.
-- **Scalability:** Scalable architecture to handle growing user base and data volume.
-- **Usability:** Intuitive and user-friendly interface requiring minimal training.
+## 🧠 Model Architecture (Research Based)
 
-## Future Work
-The project envisions continuous improvement, including the expansion of detected diseases, real-time monitoring capabilities, and support for multiple mango varieties. The ultimate goal is to enhance the app's utility for the agricultural community, contributing to precision farming and sustainable crop management.
+The model is developed using:
 
+- **MobileNetV2 (Transfer Learning)**
+- Fine-tuning of last layers
+- Input size: `224 x 224`
+- Output: Softmax classification
+
+### 📂 Classes:
+- Alternaria  
+- Anthracnose  
+- Black Mould Rot  
+- Healthy  
+- Stem End Rot  
+
+---
+
+## 🎯 Why MobileNetV2?
+
+- Lightweight & fast  
+- High accuracy with small dataset  
+- Suitable for real-time prediction  
+- Ideal for web & mobile deployment  
+
+---
+
+## 🌐 Website Features
+
+### 🔹 Frontend (React)
+- Image upload with preview  
+- Mobile-style modern UI  
+- Loading animation  
+- Confidence visualization  
+- Disease details display  
+
+### 🔹 Backend (Flask API)
+- `/detect` REST API  
+- Image preprocessing  
+- Model prediction  
+- JSON response  
+
+---
+
+## ⚙️ Workflow
+
+1. User uploads mango image  
+2. Image sent to Flask API  
+3. Model processes the image  
+4. Prediction generated  
+5. Result displayed on UI  
+
+---
+
+## 📊 Sample Output
+
+- **Predicted Disease:** Anthracnose  
+- **Confidence:** 99.78%  
+
+---
+
+## 🚀 Tech Stack
+
+| Layer       | Technology |
+|------------|-----------|
+| Frontend   | React + CSS |
+| Backend    | Flask |
+| ML Model   | TensorFlow / Keras |
+| Architecture | MobileNetV2 |
+| Image Processing | OpenCV / PIL |
+
+---
+
+## 📑 Research Contribution
+
+This project implements a **transfer learning-based CNN model using MobileNetV2** for efficient mango disease detection.
+
+### 🔬 Key Contributions:
+- Lightweight CNN model for real-time detection  
+- Fine-tuned MobileNetV2 improves accuracy  
+- Multi-class classification of mango diseases  
+- Integration with web application for practical use  
+
+### ⚙️ Training Strategy:
+- Data augmentation applied  
+- Fine-tuning last layers  
+- Early stopping to avoid overfitting  
+
+---
 ## Demo Images / Output
 
 <img width="960" alt="Screenshot 2023-12-15 225608" src="https://github.com/user-attachments/assets/90160009-583c-435d-b35c-2a58cc78e52b">
