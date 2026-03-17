@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// Use Vite proxy (vite.config.mts) so frontend -> backend works reliably.
 const API_URL = "/detect";
 
 export default function App() {
@@ -14,11 +13,13 @@ export default function App() {
     const file = e.target.files?.[0];
     setError("");
     setResult(null);
+
     if (!file) {
       setSelectedFile(null);
       setPreviewUrl("");
       return;
     }
+
     setSelectedFile(file);
     setPreviewUrl(URL.createObjectURL(file));
   };
@@ -29,7 +30,7 @@ export default function App() {
     setResult(null);
 
     if (!selectedFile) {
-      setError("Please select a mango image first.");
+      setError("Please select an image first");
       return;
     }
 
@@ -38,20 +39,17 @@ export default function App() {
 
     try {
       setLoading(true);
-      const response = await fetch(API_URL, {
+
+      const res = await fetch(API_URL, {
         method: "POST",
-        body: formData
+        body: formData,
       });
 
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(err.error || "Failed to get prediction from server.");
-      }
-
-      const data = await response.json();
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Server error");
       setResult(data);
     } catch (err) {
-      setError(err.message || "Something went wrong. Please try again.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -60,80 +58,129 @@ export default function App() {
   return (
     <div className="page">
       <header className="header">
-        <h1>Mango Fruit Disease Detection</h1>
-        <p>Upload a mango image and detect possible diseases using AI.</p>
+        <div className="brand">
+          <div className="brand-mark">M</div>
+          <div className="brand-text">
+            <h1>Mango Disease Detector</h1>
+            <p>Upload a mango photo and get an instant diagnosis.</p>
+          </div>
+        </div>
       </header>
 
       <main className="container">
         <section className="card">
-          <h2>Upload Mango Image</h2>
-          <p className="subtitle">
-            Choose a clear photo of a mango fruit. Supported formats: JPG, PNG.
-          </p>
 
           <form onSubmit={handleSubmit} className="form">
-            <label className="file-input-label">
-              <span>Select Image</span>
+
+            <div className="uploader">
               <input
+                className="file-input"
+                id="mango-image"
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
               />
-            </label>
+              <label className="file-input-label" htmlFor="mango-image">
+                <div className="file-input-title">
+                  {selectedFile ? "Image selected" : "Choose an image"}
+                </div>
+                <div className="file-input-subtitle">
+                  {selectedFile ? selectedFile.name : "JPG, PNG, WEBP"}
+                </div>
+              </label>
 
-            {previewUrl && (
-              <div className="preview">
-                <img src={previewUrl} alt="Selected mango" />
-              </div>
-            )}
+              {previewUrl && (
+                <div className="preview">
+                  <img src={previewUrl} alt="Selected mango" />
+                </div>
+              )}
+            </div>
 
-            <button type="submit" className="primary-btn" disabled={loading}>
-              {loading ? "Analyzing..." : "Detect Disease"}
-            </button>
+            <div className="actions">
+              <button className="primary-btn" disabled={loading || !selectedFile}>
+                {loading ? "Analyzing..." : "Detect"}
+              </button>
+              <button
+                type="button"
+                className="secondary-btn"
+                onClick={() => {
+                  setSelectedFile(null);
+                  setPreviewUrl("");
+                  setResult(null);
+                  setError("");
+                }}
+                disabled={loading}
+              >
+                Reset
+              </button>
+            </div>
+
           </form>
+
+          {loading && (
+            <div className="loader">
+              <div className="spinner"></div>
+              <p>Analyzing Image...</p>
+            </div>
+          )}
 
           {error && <div className="alert alert-error">{error}</div>}
 
           {result && (
             <div className="result">
-              <h3>Prediction Result</h3>
+
+              <div className="result-head">
+                <h3>Result</h3>
+                <span
+                  className={
+                    result.predicted_disease === "Healthy"
+                      ? "pill pill-ok"
+                      : "pill pill-warn"
+                  }
+                >
+                  {result.predicted_disease === "Healthy" ? "Healthy" : "Disease"}
+                </span>
+              </div>
               <p className="disease-name">{result.predicted_disease}</p>
 
               <div className="result-grid">
-                <div>
-                  <h4>Disease Type</h4>
-                  <p>{result.disease_type}</p>
-                </div>
+
                 <div>
                   <h4>Severity</h4>
                   <p>{result.severity}</p>
                 </div>
+
                 <div className="full-width">
                   <h4>Description</h4>
                   <p>{result.description}</p>
                 </div>
+
                 <div className="full-width">
                   <h4>Symptoms</h4>
                   <p>{result.symptoms}</p>
                 </div>
+
                 <div className="full-width">
                   <h4>Diagnosis</h4>
                   <p>{result.diagnosis}</p>
                 </div>
+
                 <div className="full-width">
                   <h4>Precautions</h4>
                   <p>{result.precautions}</p>
                 </div>
+
               </div>
+
             </div>
           )}
+
         </section>
       </main>
 
       <footer className="footer">
-        <span>Mango Fruit Disease Detection • Flask + React</span>
+        Mango Detection • AI Project
       </footer>
     </div>
   );
 }
-
